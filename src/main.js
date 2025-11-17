@@ -5,7 +5,6 @@ function jumbleArray() {
     randomArraySetup[index] = index;
     randomArraySetup[index+1] = index;
   }
-  console.log(randomArraySetup)
   let arr = randomArraySetup;
 
   for (let i = arr.length - 1; i > 0; i--) {
@@ -16,7 +15,6 @@ function jumbleArray() {
 }
 
 let gameArray = jumbleArray();
-console.log(gameArray)
 
 function renderGameSetup() {
   const compareBox = document.createElement('div');
@@ -82,8 +80,13 @@ function secondClickEvent(value) {
   })
   gameMode = gameMode === 'user'? 'opponent': 'user';
   if(first === second) {
+    renderOut(first);
     userScore+=2
     renderScore(userScore, user)
+    for (let index = gameArray.length-1; index >=0; index--) {
+      if(gameArray[index] === Number(first))
+        gameArray.splice(index, 1);  
+    }
   }
   if(gameMode === 'opponent')
     computerGuess();
@@ -98,30 +101,51 @@ function renderScore(score, player) {
   const playerName = document.getElementById(player);
   const p = playerName.querySelector("p");
   p.innerHTML = score;
-
 }
 
 
 function computerGuess() {
   document.getElementById('playerTitle').innerHTML = 'Opponent';
-  let firstGuess = Math.floor(Math.random() * 12);
-  let secondGuess = Math.floor(Math.random() * 12);
-  secondDiv.innerHTML = secondGuess;
-  console.log(firstGuess,secondGuess)
+  let firstGuess = computerMove();
+  let secondGuess = computerMove();
+  console.log(firstGuess,secondGuess);
+  // i will deal with this later 
   
 
   
   if(firstGuess === secondGuess) {
     opponentScore+=2;
+    for (let index = gameArray.length-1; index >=0; index--) {
+      if(gameArray[index] === Number(secondGuess))
+        gameArray.splice(index, 1);  
+    }
     renderScore(opponentScore, opponent)
   }
   gameMode = gameMode === 'user'? 'opponent': 'user';
   clickEventActive();
 }
 
+function computerMove() {
+  const index = Math.floor(Math.random() * gameArray.length);
+  const value =  gameArray[index];
+  return value;
+}
 
 function clickEventActive() {
   keys.forEach(key => {
     key.classList.remove('no-click')
   })
+}
+
+let renderCounter = 1;
+
+function renderOut(value) {
+  renderCounter++;
+  const keys = document.querySelectorAll(`[value="${value}"]`);
+  keys.forEach(key => {
+    key.style.pointerEvents = "none";
+    key.style.opacity = "0.5";
+  })
+  if(renderCounter > 12)
+    console.log("GameOver")
 }
