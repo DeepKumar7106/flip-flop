@@ -3,11 +3,105 @@
   <head>
     <meta charset="UTF-8" />
     <link rel="icon" type="image/svg+xml" href="/vite.svg" />
+    <link rel="stylesheet" href="/src/style.css">
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>flip-flop</title>
   </head>
-  <body>
-    <div id="app"></div>
+  <body class="center">
+    <header class="center">
+
+    </header>
+    <main class="center">
+      <section id="details" class="center">
+        <h1>FLIPorFLOP</h1>
+        <p>
+          Lorem, ipsum dolor sit amet consectetur adipisicing elit. Corrupti cum fuga, accusantium incidunt temporibus repudiandae sit esse voluptatibus! Vitae inventore repellendus ex consectetur suscipit similique, aperiam perferendis pariatur nemo nihil!
+        </p>
+      </section>
+      <section id="choice" class="center">
+        <h2>Choose game mode</h2>
+        <div id="choiceContainer" class="center">
+          <div class="choiceBox">
+            <img src="" alt="">
+            <p>human</p>
+          </div>
+          <div class="choiceBox">
+            <img src="" alt="">
+            <p>human</p>
+          </div>
+        </div>
+      </section>
+      <section id="toss" class="center">
+        <h2>Toss</h2>
+        <p>Choose the coin</p>
+        <div id="coinBox" class="center">
+          <div class="coin">
+            <img src="" alt="">
+            <p>Heads</p>
+          </div>
+          <div class="coin">
+            <img src="" alt="">
+            <p>Tails</p>
+          </div>
+        </div>
+        <button id="tossResult">Play</button>
+      </section>
+      <section id="game" class="center">
+        <div id="scoreBox" class="center">
+          <div id="user" class="player center">
+            <img src="" alt="" class="profile">
+            <div class="statBox">
+              <h2>User</h2>
+              <p>score: 200</p>
+            </div>
+          </div>
+          <div id="opponent" class="player center">
+            <div class="statBox">
+              <h2>Opponent</h2>
+              <p>score: 200</p>
+            </div>
+            <img src="" alt="" class="profile">
+          </div>
+        </div>
+        <div id="actualGame">
+          <div class="keys"></div>
+          <div class="keys"></div>
+          <div class="keys"></div>
+          <div class="keys"></div>
+          <div class="keys"></div>
+          <div class="keys"></div>
+          <div class="keys"></div>
+          <div class="keys"></div>
+          <div class="keys"></div>
+          <div class="keys"></div>
+          <div class="keys"></div>
+          <div class="keys"></div>
+          <div class="keys"></div>
+          <div class="keys"></div>
+          <div class="keys"></div>
+          <div class="keys"></div>
+          <div class="keys"></div>
+          <div class="keys"></div>
+          <div class="keys"></div>
+          <div class="keys"></div>
+          <div class="keys"></div>
+          <div class="keys"></div>
+          <div class="keys"></div>
+          <div class="keys"></div>
+        </div>
+        <div id="buttonBox" class="center">
+          <button>
+            Play Again
+          </button>
+          <button>
+            Home
+          </button>
+          </div>
+      </section>
+      <section id="result" class="center">
+        <h2>won</h2>
+      </section>
+    </main>
     <script type="module" src="/src/main.js"></script>
   </body>
 </html>
