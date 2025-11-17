@@ -53,6 +53,10 @@
   flex-direction: column;
 }
 
+.no-click {
+  pointer-events: none;
+}
+
 body {
   min-height: 100vh;
   background-image: var(--bg-gradient);
@@ -132,7 +136,7 @@ section {
 
 #actualGame {
   padding: 20px;
-  margin: 30px 10px;
+  margin: 10px 10px 20px 10px ;
   background: var(--primary-300);
   border-radius: 20px;
   box-shadow: 5px 5px 10px var(--black);
@@ -150,7 +154,27 @@ section {
   }
 }
 
+#compareBox{
+  width: 300px;
+  padding: 20px;
+  background: var(--secondary-200);
+  border-radius: 20px;
+  margin-top: 30px;
+  
+}
 
+#compareBox > div {
+  flex-direction: row;
+  gap: 10px;
+  > div {
+    height: var(--length-100);
+    width: var(--length-100);
+    border-radius: 50%;
+    background: var(--primary-200);
+    font-size: var(--fs-medium);
+    color: var(--white);
+  }
+}
 
 #buttonBox {
   flex-direction: row;
