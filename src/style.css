@@ -102,6 +102,17 @@ section {
   }
 }
 
+#tossResult {
+  margin-inline: 5px;
+    height: 70px;
+    width: 200px;
+    border-radius: 50px;
+    background: var(--secondary-200);
+    border: none;
+    font-size: var(--fs-medium);
+    color: var(--white);
+}
+
 #scoreBox {
   padding: 10px;
   flex-direction: row;
@@ -134,8 +145,12 @@ section {
     width: var(--length-100);
     border-radius: 50%;
     background: var(--primary-200);
+    font-size: var(--fs-medium);
+    color: var(--white);
   }
 }
+
+
 
 #buttonBox {
   flex-direction: row;
