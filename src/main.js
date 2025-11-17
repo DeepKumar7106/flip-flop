@@ -67,6 +67,8 @@ let first = "",
 
 
 function firstClickEvent(value) {
+  
+  document.getElementById('playerTitle').innerHTML = 'User';
   first = value;
   firstDiv.innerHTML = first;
 }
@@ -80,9 +82,11 @@ function secondClickEvent(value) {
   })
   gameMode = gameMode === 'user'? 'opponent': 'user';
   if(first === second) {
+    gameMode = 'user';
     renderOut(first);
     userScore+=2
-    renderScore(userScore, user)
+    renderScore(userScore, user);
+    clickEventActive();
     for (let index = gameArray.length-1; index >=0; index--) {
       if(gameArray[index] === Number(first))
         gameArray.splice(index, 1);  
@@ -97,23 +101,20 @@ let opponentScore = 0;
 const user = 'user', opponent = 'opponent';
 let gameMode = 'user';
 
-function renderScore(score, player) {
-  const playerName = document.getElementById(player);
-  const p = playerName.querySelector("p");
-  p.innerHTML = score;
-}
 
 
 function computerGuess() {
-  document.getElementById('playerTitle').innerHTML = 'Opponent';
   let firstGuess = computerMove();
   let secondGuess = computerMove();
   console.log(firstGuess,secondGuess);
   // i will deal with this later 
   
-
+  gameMode = gameMode === 'user'? 'opponent': 'user';
+  
   
   if(firstGuess === secondGuess) {
+    gameMode = 'opponent';
+    renderOut(secondGuess);
     opponentScore+=2;
     for (let index = gameArray.length-1; index >=0; index--) {
       if(gameArray[index] === Number(secondGuess))
@@ -121,14 +122,23 @@ function computerGuess() {
     }
     renderScore(opponentScore, opponent)
   }
-  gameMode = gameMode === 'user'? 'opponent': 'user';
   clickEventActive();
+  document.getElementById('playerTitle').innerHTML = 'Opponent';
+  if (gameMode === 'opponent' && renderCounter < 12) {
+    computerGuess();
+  }
 }
 
 function computerMove() {
   const index = Math.floor(Math.random() * gameArray.length);
   const value =  gameArray[index];
   return value;
+}
+
+function renderScore(score, player) {
+  const playerName = document.getElementById(player);
+  const p = playerName.querySelector("p");
+  p.innerHTML = score;
 }
 
 function clickEventActive() {
@@ -147,5 +157,12 @@ function renderOut(value) {
     key.style.opacity = "0.5";
   })
   if(renderCounter > 12)
-    console.log("GameOver")
+    renderResult();
+}
+
+function renderResult() {
+  if(userScore > opponentScore)
+    alert = 'You Won';
+  else
+  alert = 'Opponent Won'
 }
