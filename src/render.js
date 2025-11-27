@@ -1,7 +1,28 @@
 import * as main from "./main.js";
 
 //renders the actual game 
-export function renderGameSetup() {
+export function renderGameSetup(winner) {
+    const gameSection = document.getElementById('game');
+
+    const scoreBox = document.createElement('div');
+    scoreBox.id = 'scoreBox';
+    scoreBox.classList.add('center');
+    scoreBox.innerHTML = `
+        <div id="user" class="player center">
+            <img src="public/friend.png" alt="" class="profile">
+            <div class="statBox">
+              <p id="userScore"></p>
+            </div>
+        </div>
+        <div id="opponent" class="player center">
+            <div class="statBox">
+                <p id="opponentScore"></p>
+            </div>
+            <img src="public/computer.png" alt="" class="profile">
+        </div>
+    `;
+    gameSection.appendChild(scoreBox);
+
     const compareBox = document.createElement('div');
     compareBox.id = 'compareBox';
     compareBox.classList.add('center');
@@ -12,7 +33,6 @@ export function renderGameSetup() {
             <div id="secondDiv" class="center"></div>
         </div>
     `
-    const gameSection = document.getElementById('game');
     const actualGame = document.createElement('div');
     actualGame.id = 'actualGame';
     main.gameArray.forEach((value) => {
@@ -33,6 +53,9 @@ export function renderGameSetup() {
             main.keysEventClick(key)
         }) 
     })
+
+    if(winner === 'opponent' )
+        main.computerGuess();
 
 }
 
@@ -112,7 +135,7 @@ export function renderTossResult(winner, tossResult){
 
     const tossResultBtn = document.getElementById('tossResult');
     tossResultBtn.addEventListener('click', () => {
-        renderGameSetup();
+        renderGameSetup(winner);
         toss.style.display = 'none';
     })
 }

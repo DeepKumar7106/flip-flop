@@ -52,12 +52,17 @@ function renderOut(value) {
 //match case for both ends
 function matchCase(player, guess) {
   renderOut(guess);
-  if( player === user)
+  if( player === user) {
     userScore++;
-  else
+    document.getElementById('userScore').innerHTML = userScore;
+
+  }
+  else {
     opponentScore++;
+    document.getElementById('opponentScore').innerHTML = opponentScore;
+  }
   removeElements(guess);
-  console.log(userScore, opponentScore);
+  //(userScore, opponentScore);
 }
 
 //allows user to click again
@@ -104,7 +109,7 @@ const opponent = 'opponent', user = 'user';
 const firstDiv = document.getElementById('firstDiv');
 const secondDiv = document.getElementById('secondDiv');
 
-console.log(firstDiv,secondDiv)
+//(firstDiv,secondDiv)
 
 //player related 
 let firstClick = true,
@@ -113,7 +118,7 @@ let firstClick = true,
 
 //this function is called when clicked a key 
 export function keysEventClick(key) {
-  console.log(key);
+  //(key);
   const value = key.getAttribute("value");
   if(firstClick) 
     compareValue = String(value);
@@ -140,10 +145,10 @@ export function keysEventClick(key) {
 
 
 function firstClickEvent(value) {
-  console.log(value);
+  //(value);
   document.getElementById('playerTitle').innerHTML = 'User';
   first = value;
-  console.log(first);
+  //(first);
   document.getElementById('firstDiv').innerHTML = first;
 }
 
@@ -179,17 +184,31 @@ function computerMove() {
   return value;
 }
 
-function computerGuess() {
-  const firstGuess = computerMove();
-  const secondGuess = computerMove();
+export function computerGuess() {
+  let firstGuess, secondGuess;
+  if(gameArray.length === 2) {
+    matchCase(opponent, gameArray[0]);
+  } else { 
+    setTimeout(() => {
+      firstGuess = computerMove();
+      document.getElementById('firstDiv').innerHTML = firstGuess;
+    }, 50);
 
-  console.log(firstGuess,secondGuess);
-  if(firstGuess === secondGuess && renderCounter < 12) {
-    matchCase(opponent, secondGuess);
-    setTimeout(computerGuess, 1000);
-  } else {
-    clickEventActive();
-    currentPlayer = user;
+    setTimeout(() => {
+      secondGuess = computerMove();
+      document.getElementById('secondDiv').innerHTML = secondGuess;
+    }, 100)
+    
+    //(firstGuess,secondGuess);
+    setTimeout(() => {
+      if(firstGuess === secondGuess && renderCounter < 12) {
+        matchCase(opponent, secondGuess);
+        setTimeout(computerGuess, 1000);
+      } else {
+        clickEventActive();
+        currentPlayer = user;
+      }
+    }, 500)
   }
 }
 
