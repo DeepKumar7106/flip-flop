@@ -1,4 +1,6 @@
-import { renderGameSetup } from "./render";
+import * as render from "./render";
+//renders gamemode selection 
+render.renderGameModeSelection();
 
 
 //randomiser for the game 
@@ -19,10 +21,10 @@ function jumbleArray() {
 }
 
 //stores into a array
-let gameArray = jumbleArray();
+export let gameArray = jumbleArray();
 
 //renders the actual game 
-renderGameSetup(gameArray);
+// renderGameSetup(gameArray);
 
 
 //removes the provided element 
@@ -47,17 +49,58 @@ function renderOut(value) {
     renderResult();
 }
 
+//match case for both ends
+function matchCase(player, guess) {
+  renderOut(guess);
+  if( player === user)
+    userScore++;
+  else
+    opponentScore++;
+  removeElements(guess);
+  console.log(userScore, opponentScore);
+}
+
 //allows user to click again
 function clickEventActive() {
+  const keys = document.querySelectorAll('.keys')
   keys.forEach(key => {
     key.classList.remove('no-click')
   })
 }
 
-let gameMode = 'user',
+//game functionings
+let gameMode = '';
+
+const choiceBoxes = document.querySelectorAll('.choiceBox');
+choiceBoxes.forEach(choiceBox => {
+  choiceBox.addEventListener('click', () => {
+    //store the game mode selected
+    gameMode = choiceBox.querySelector('p').textContent;
+
+    //set the display to none
+    document.getElementById('choice').style.display = 'none';
+
+    //move on to toss
+    render.renderTossBox();
+  })
+})
+
+//toss functionality
+
+export function tossEvent(coin) {
+  const randomToss = (Math.floor(Math.random() * 2))? 'Heads': 'Tails';
+  const userToss = String(coin.querySelector('p').textContent);
+  currentPlayer = randomToss === userToss? user : opponent;
+
+  render.renderTossResult(currentPlayer, randomToss);
+  
+  // document.getElementById('toss').style.display = 'none';
+}
+
+let currentPlayer = 'user',
     userScore = 0,
     opponentScore = 0;
-
+const opponent = 'opponent', user = 'user';
 const firstDiv = document.getElementById('firstDiv');
 const secondDiv = document.getElementById('secondDiv');
 
@@ -67,46 +110,64 @@ console.log(firstDiv,secondDiv)
 let firstClick = true,
     compareValue = "",
     first,second;
-const keys = document.querySelectorAll('.keys');
-keys.forEach((key) => {
-  key.addEventListener('click', () => {
-    const value = key.getAttribute("value");
-    if(firstClick) 
-      compareValue = String(value);
-    else
-      secondClickEvent(String(value));
-    firstClick = firstClick? false : true;
-    firstClickEvent(compareValue);
-  })
-})
+
+//this function is called when clicked a key 
+export function keysEventClick(key) {
+  console.log(key);
+  const value = key.getAttribute("value");
+  if(firstClick) 
+    compareValue = String(value);
+  else
+    secondClickEvent(String(value));
+  firstClick = firstClick? false : true;
+  firstClickEvent(compareValue);
+
+}
+
+//doesnot work
+// const keys = document.querySelectorAll('.keys');
+// keys.forEach((key) => {
+//   key.addEventListener('click', () => {
+//     const value = key.getAttribute("value");
+//     if(firstClick) 
+//       compareValue = String(value);
+//     else
+//       secondClickEvent(String(value));
+//     firstClick = firstClick? false : true;
+//     firstClickEvent(compareValue);
+//   })
+// })
 
 
 function firstClickEvent(value) {
-  console.log('clicker')
+  console.log(value);
   document.getElementById('playerTitle').innerHTML = 'User';
   first = value;
-  firstDiv.innerHTML = first;
+  console.log(first);
+  document.getElementById('firstDiv').innerHTML = first;
 }
 
 function secondClickEvent(value) {
   second = value;
-  secondDiv.innerHTML = second;
+  document.getElementById('secondDiv').innerHTML = second;
+  const keys = document.querySelectorAll('.keys')
+ 
 
-  keys.forEach(key => {
-    key.classList.add('no-click')
-  })
-
-  gameMode = gameMode === 'user'? 'opponent': 'user';
+  currentPlayer = currentPlayer === user? opponent: user;
   if(first === second) {
-    gameMode = 'user';
-    renderOut(first);
-    userScore+=2
-    // renderScore(userScore, user);
-    clickEventActive();
-    removeElements(second);
+    keys.forEach( key => {
+      key.classList.remove('no-click');
+    })
+    currentPlayer = 'user';
+    matchCase(user, second);
+    // clickEventActive();
   }
-  if(gameMode === 'opponent')
+  if(currentPlayer === 'opponent') {
+    keys.forEach(key => {
+      key.classList.add('no-click')
+    })
     computerGuess();
+  }
 }
 
 
@@ -123,13 +184,29 @@ function computerGuess() {
   const secondGuess = computerMove();
 
   console.log(firstGuess,secondGuess);
-  if(firstGuess === secondGuess) {
-    renderOut(secondGuess);
-    opponentScore+=2;
-    removeElements(secondGuess);
+  if(firstGuess === secondGuess && renderCounter < 12) {
+    matchCase(opponent, secondGuess);
     setTimeout(computerGuess, 1000);
   } else {
     clickEventActive();
-    gameMode = 'user';
+    currentPlayer = user;
+  }
+}
+
+
+
+//results
+function renderResult() {
+  const game = document.getElementById('game');
+  game.classList.add('gameResult');
+
+  const result = document.getElementById('result');
+  result.style.display = 'flex';
+
+  const resultHeading = document.getElementById('resultHeading');
+  if(userScore > opponentScore) {
+    resultHeading.innerHTML = user + ' won';
+  } else {
+    resultHeading.innerHTML = opponent + ' won';
   }
 }

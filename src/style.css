@@ -110,13 +110,19 @@ section {
 
 #tossResult {
   margin-inline: 5px;
-    height: 70px;
-    width: 200px;
-    border-radius: 50px;
-    background: var(--secondary-200);
-    border: none;
-    font-size: var(--fs-medium);
-    color: var(--white);
+  height: 70px;
+  width: 200px;
+  border-radius: 50px;
+  background: var(--secondary-200);
+  border: none;
+  font-size: var(--fs-medium);
+  color: var(--white);
+}
+
+#tossResultText {
+  font-size: var(--fs-medium);
+  text-align: center;
+  margin: 5px;
 }
 
 #scoreBox {
@@ -195,12 +201,23 @@ section {
   }
 }
 
+.gameResult {
+  position: relative;
+  > * {
+  filter: blur(10px);
+  }
+}
+
 #result {
   height: var(--length-500);
-  width: var(--length-90p);
+  width: var(--length-100p);
   background: var(--secondary-200);
   border-radius: 25px;
   box-shadow: 5px 5px 10px var(--black);
+  position: absolute;
+  display: none;
+  filter: none;
+  z-index: 9999;
   & h2 {
     font-size: var(--fs-xlarge);
   }
