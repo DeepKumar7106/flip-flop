@@ -1,0 +1,83 @@
+import { renderGameSetup } from "./render";
+
+function jumbleArray() {
+  let randomArraySetup = [];
+
+  for (let index = 0; index < 24; index+=2) {
+      randomArraySetup[index] = index;
+      randomArraySetup[index+1] = index;
+  }
+  let arr = randomArraySetup;
+
+  for (let i = arr.length - 1; i > 0; i--) {
+      let j = Math.floor(Math.random() * (i + 1));
+      [arr[i], arr[j]] = [arr[j], arr[i]]; 
+  }
+  return arr;
+}
+
+
+let gameArray =jumbleArray;
+
+function removeElements(value){
+  for (let index = gameArray.length-1; index >=0; index--) {
+    if(gameArray[index] === Number(value))
+      gameArray.splice(index, 1);  
+  }
+}
+
+renderGameSetup(arr);
+
+let firstClick = true;
+let compareValue = "";
+
+const keys = document.querySelectorAll('.keys');
+keys.forEach(key => {
+  key.addEventListener('click', () => {
+    const value = key.getAttribute("value");
+    if(firstClick) 
+      compareValue = String(value);
+    else
+      secondClickEvent(String(value));
+    firstClick = firstClick? false : true;
+    firstClickEvent(compareValue);
+  })
+})
+
+
+let userScore = 0;
+let opponentScore = 0;
+let gameMode = 'user';
+
+
+function renderScore(score, player) {
+  const playerName = document.getElementById(player);
+  const p = playerName.querySelector("p");
+  p.innerHTML = score;
+}
+
+function clickEventActive() {
+  keys.forEach(key => {
+    key.classList.remove('no-click')
+  })
+}
+
+let renderCounter = 1;
+
+function renderOut(value) {
+  renderCounter++;
+  const keys = document.querySelectorAll(`[value="${value}"]`);
+  keys.forEach(key => {
+    key.style.pointerEvents = "none";
+    key.style.opacity = "0.5";
+  })
+  if(renderCounter > 12)
+    renderResult();
+}
+
+function renderResult() {
+  if(userScore > opponentScore)
+    alert = 'You Won';
+  else
+  alert = 'Opponent Won'
+}

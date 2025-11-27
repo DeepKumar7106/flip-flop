@@ -43,6 +43,7 @@
   margin: 0;
   padding: 0;
   box-sizing: border-box;
+  user-select: none;
   /* outline: 1px solid blue; */
 }
 
@@ -59,7 +60,8 @@
 
 body {
   min-height: 100vh;
-  background-image: var(--bg-gradient);
+  background-color: rgb(115, 255, 0);
+  /* background-image: var(--bg-gradient); */
   /* mask-image: linear-gradient( transparent, var(--primary-100), transparent); */
   /* background: linear-gradient(to top, #93f9b9, #1d976c); */
   background-repeat: no-repeat;
