@@ -1,4 +1,4 @@
-import * as render from "./render";
+import * as render from "./render.js";
 //renders gamemode selection 
 render.renderGameModeSelection();
 
